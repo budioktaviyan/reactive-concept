@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Reactive Concept</string>
+    <string name="btn_schedule">Start Scheduling</string>
 </resources>
