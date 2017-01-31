@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Reactive Concept</string>
     <string name="btn_schedule">Start Scheduling</string>
+    <string name="btn_schedule_movie">Schedule</string>
+    <string name="text_schedule_detail">Detail Schedule</string>
+    <string name="text_city">City</string>
+    <string name="text_date">Date</string>
+    <string name="text_movie">Movie</string>
+    <string name="text_genre">Genre</string>
+    <string name="text_duration">Duration</string>
+    <string name="text_theater">Theater</string>
+    <string name="text_time">Time</string>
+    <string name="text_price">Price</string>
 </resources>

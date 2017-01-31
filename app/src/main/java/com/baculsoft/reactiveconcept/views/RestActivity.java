@@ -2,11 +2,16 @@ package com.baculsoft.reactiveconcept.views;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.baculsoft.reactiveconcept.R;
@@ -25,16 +30,22 @@ import rx.schedulers.Schedulers;
 /**
  * @author Budi Oktaviyan Suryanto (budioktaviyans@gmail.com)
  */
-public class RestActivity extends AppCompatActivity {
+public class RestActivity extends AppCompatActivity implements RestAdapter.ItemClick {
     ProgressBar progressBar;
     Subscription subscription;
+    Toolbar toolbar;
+    RecyclerView recyclerView;
+    FrameLayout frameLayout;
+    RestAdapter.ItemClick listener;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rest);
         initToolbar();
+        addItemClickListener();
         initProgressBar();
+        initFrameLayout();
         loadCity();
     }
 
@@ -47,15 +58,68 @@ public class RestActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        final int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count != 0) {
+            toolbar.setNavigationIcon(null);
+            recyclerView.setVisibility(View.VISIBLE);
+            frameLayout.setVisibility(View.GONE);
+            getSupportFragmentManager().popBackStack();
+        } else {
+            finish();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                onBackPressed();
+                break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(final String id) {
+        final Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+
+        final Fragment fragment = DetailFragment.newInstance();
+        fragment.setArguments(bundle);
+
+        final String tag = DetailFragment.class.getSimpleName();
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(frameLayout.getId(), fragment, tag);
+        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commit();
+
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.mipmap.ic_arrow_back));
+        recyclerView.setVisibility(View.GONE);
+        frameLayout.setVisibility(View.VISIBLE);
+    }
+
     private void initToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_rest);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_rest);
         toolbar.setTitle(getTitle());
         setSupportActionBar(toolbar);
     }
 
+    private void addItemClickListener() {
+        listener = this;
+    }
+
     private void initProgressBar() {
-        progressBar = (ProgressBar) findViewById(R.id.pb_result);
+        progressBar = (ProgressBar) findViewById(R.id.pb_rest);
         progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void initFrameLayout() {
+        frameLayout = (FrameLayout) findViewById(R.id.fl_rest);
     }
 
     private void loadCity() {
@@ -73,10 +137,10 @@ public class RestActivity extends AppCompatActivity {
             @Override
             public void onNext(final Response<JadwalBioskop> response) {
                 final List<JadwalBioskop.Data> data = response.body().data;
-                final RestAdapter adapter = new RestAdapter(data);
-                final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_result);
+                final RestAdapter adapter = new RestAdapter(data, listener);
                 final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RestActivity.this);
 
+                recyclerView = (RecyclerView) findViewById(R.id.rv_rest);
                 recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.smoothScrollToPosition(recyclerView.getBottom());
                 recyclerView.setAdapter(adapter);

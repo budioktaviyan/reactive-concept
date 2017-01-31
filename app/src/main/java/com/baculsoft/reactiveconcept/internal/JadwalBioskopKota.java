@@ -3,6 +3,8 @@ package com.baculsoft.reactiveconcept.internal;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,9 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JadwalBioskopKota {
+
+    @JsonProperty(value = "status")
+    public String status;
 
     @JsonProperty(value = "kota")
     public String kota;
@@ -40,6 +45,7 @@ public class JadwalBioskopKota {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @Parcel(Parcel.Serialization.BEAN)
     public static class Jadwal {
 
         @JsonProperty(value = "bioskop")

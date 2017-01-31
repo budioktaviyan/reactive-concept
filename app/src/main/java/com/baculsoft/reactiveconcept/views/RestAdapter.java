@@ -15,10 +15,12 @@ import java.util.List;
  * @author Budi Oktaviyan Suryanto (budioktaviyans@gmail.com)
  */
 public class RestAdapter extends RecyclerView.Adapter<RestAdapter.RestHolder> {
-    private final List<JadwalBioskop.Data> data;
+    private final List<JadwalBioskop.Data> mData;
+    private final ItemClick mListener;
 
-    public RestAdapter(final List<JadwalBioskop.Data> data) {
-        this.data = data;
+    public RestAdapter(final List<JadwalBioskop.Data> data, final ItemClick listener) {
+        mData = data;
+        mListener = listener;
     }
 
     @Override
@@ -29,8 +31,8 @@ public class RestAdapter extends RecyclerView.Adapter<RestAdapter.RestHolder> {
 
     @Override
     public void onBindViewHolder(final RestHolder holder, final int position) {
-        final String id = data.get(position).id;
-        final String city = data.get(position).kota;
+        final String id = mData.get(position).id;
+        final String city = mData.get(position).kota;
 
         holder.tvRest.setTag(id);
         holder.tvRest.setText(city);
@@ -38,7 +40,11 @@ public class RestAdapter extends RecyclerView.Adapter<RestAdapter.RestHolder> {
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return mData.size();
+    }
+
+    public ItemClick getListener() {
+        return mListener;
     }
 
     class RestHolder extends RecyclerView.ViewHolder {
@@ -47,6 +53,18 @@ public class RestAdapter extends RecyclerView.Adapter<RestAdapter.RestHolder> {
         public RestHolder(final View itemView) {
             super(itemView);
             tvRest = (TextView) itemView.findViewById(R.id.tv_rest);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    final String id = tvRest.getTag().toString();
+                    getListener().onItemClick(id);
+                }
+            });
         }
+    }
+
+    interface ItemClick {
+        void onItemClick(String id);
     }
 }

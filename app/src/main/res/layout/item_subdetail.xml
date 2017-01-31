@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              tools:targetApi="LOLLIPOP">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="start|center"
+        android:lineSpacingExtra="2sp"
+        android:padding="8dp"
+        android:text="@string/text_theater"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_subdetail_theater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|center"
+        android:lineSpacingExtra="2sp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="start|center"
+        android:lineSpacingExtra="2sp"
+        android:padding="8dp"
+        android:text="@string/text_time"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_subdetail_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|center"
+        android:lineSpacingExtra="2sp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="start|center"
+        android:lineSpacingExtra="2sp"
+        android:padding="8dp"
+        android:text="@string/text_price"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_subdetail_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|center"
+        android:lineSpacingExtra="2sp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark" />
+</LinearLayout>
