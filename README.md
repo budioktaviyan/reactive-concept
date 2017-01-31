@@ -1,2 +1,2 @@
-# android-reactive
-Sample Implementation for Android Reactive Programming Using RxJava and RxAndroid
+# Reactive Concept
+Reactive Programming Concept Using RxJava and RxAndroid
